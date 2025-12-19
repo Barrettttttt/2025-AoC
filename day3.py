@@ -28,6 +28,8 @@ with open("day3input.txt", 'r') as file:
             battery_joltage = int(joltage_rating[char_index])
             if battery_joltage > sec_battery_joltage:
                 sec_battery_joltage = battery_joltage
+                if sec_battery_joltage == max_battery_joltage:
+                    break
 
         total_joltage += (cur_high_jolt * 10) + sec_battery_joltage
 
