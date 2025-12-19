@@ -19,13 +19,17 @@ with open("day3input.txt", 'r') as file:
             if battery_joltage > cur_high_jolt:
                 cur_high_jolt = battery_joltage
                 cur_high_jolt_indx = char_index
+                if cur_high_jolt == max_battery_joltage:
+                    break
 
         sec_battery_joltage = 0
 
         for char_index in range(cur_high_jolt_indx + 1, num_battery_banks):
             battery_joltage = int(joltage_rating[char_index])
-            if battery_joltage > int(sec_battery_joltage):
+            if battery_joltage > sec_battery_joltage:
                 sec_battery_joltage = battery_joltage
+                if sec_battery_joltage == max_battery_joltage:
+                    break
 
         total_joltage += (cur_high_jolt * 10) + sec_battery_joltage
 
