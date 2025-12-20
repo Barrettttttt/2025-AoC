@@ -2,36 +2,45 @@
 
 #My solution for day 3 parts 1 & 2 of the 2025 Advent of Code
 
-total_joltage = 0
-max_battery_joltage = 9
+MAX_BATTERY_JOLTAGE = 9
+
+p1_total_joltage = 0
+p2_total_joltage = 0
+
+def max_bank_joltage(joltage_rating: str, num_batteries: int) -> int:
+    num_battery_banks = len(joltage_rating)
+    output_joltage = ""
+    last_char_index = -1
+
+    while num_batteries > 0:
+        high_joltage = 0
+        char_index = last_char_index + 1
+
+        end_search_index = 0
+        if num_batteries == 1:
+            end_search_index = num_battery_banks
+        else:
+            end_search_index = -num_batteries + 1
+
+        for char in joltage_rating[char_index : end_search_index]:
+            battery_joltage = int(char)
+            if battery_joltage > high_joltage:
+                high_joltage = battery_joltage
+                last_char_index = char_index
+            char_index += 1
+            if high_joltage == MAX_BATTERY_JOLTAGE:
+                break;
+
+        output_joltage += str(high_joltage)
+        num_batteries -= 1
+
+    return int(output_joltage)
 
 with open("day3input.txt", 'r') as file:
     for line in file:
         joltage_rating = line.strip()
+        p1_total_joltage += max_bank_joltage(joltage_rating, 2)
+        p2_total_joltage += max_bank_joltage(joltage_rating, 12)
 
-        cur_high_jolt = 0
-        cur_high_jolt_indx = 0
-        num_battery_banks = len(joltage_rating)
-
-        #purposely leaving out the last digit in the joltage rating since we need a 2 digit number
-        for char_index in range(num_battery_banks - 1):
-            battery_joltage = int(joltage_rating[char_index])
-            if battery_joltage > cur_high_jolt:
-                cur_high_jolt = battery_joltage
-                cur_high_jolt_indx = char_index
-                if cur_high_jolt == max_battery_joltage:
-                    break
-
-        sec_battery_joltage = 0
-
-        for char_index in range(cur_high_jolt_indx + 1, num_battery_banks):
-            battery_joltage = int(joltage_rating[char_index])
-            if battery_joltage > sec_battery_joltage:
-                sec_battery_joltage = battery_joltage
-                if sec_battery_joltage == max_battery_joltage:
-                    break
-
-        total_joltage += (cur_high_jolt * 10) + sec_battery_joltage
-
-
-print(f'The total output joltage for part 1 is: {total_joltage}')
+print(f'The total output joltage for part 1 is: {p1_total_joltage}')
+print(f'The total output joltage for part 2 is: {p2_total_joltage}')
