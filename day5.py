@@ -37,10 +37,13 @@ with open("day5input.txt", 'r') as file:
                 ids.append(int(message))
 
 merged_fresh_ingred_id_ranges = merge_overlapping_ranges(fresh_ingred_id_ranges)
+lowest_id = merged_fresh_ingred_id_ranges[0][0]
+highest_id = merged_fresh_ingred_id_ranges[-1][1]
 
 for id in ids:
-    if check_freshness(merged_fresh_ingred_id_ranges, id):
-        p1_num_fresh_ingred += 1
+    if lowest_id <= id <= highest_id:
+        if check_freshness(merged_fresh_ingred_id_ranges, id):
+            p1_num_fresh_ingred += 1
 
 for fresh_ingred_id_range in merged_fresh_ingred_id_ranges:
     lower_lim, upper_lim = fresh_ingred_id_range
