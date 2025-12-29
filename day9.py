@@ -4,6 +4,7 @@
 
 red_tile_coords = []
 p1_largest_area = 0
+p2_largest_area = 0
 
 def find_rect_area(x1 : int, x2 : int, y1 : int, y2 : int) -> int:
     len_rect = abs(x1-x2) + 1
@@ -18,11 +19,9 @@ with open("day9input.txt", 'r') as file:
 
 num_red_tiles = len(red_tile_coords)
 
-for tile_a_index in range(num_red_tiles):
-    x1, y1 = red_tile_coords[tile_a_index]
-
-    for tile_b_index in range(tile_a_index + 1, num_red_tiles):
-        x2, y2 = red_tile_coords[tile_b_index]
+for tile_a_index, (x1, y1) in enumerate(red_tile_coords):
+    #for tile_b_index in range(tile_a_index + 1, num_red_tiles):
+    for x2, y2 in red_tile_coords[tile_a_index:]:
 
         area = find_rect_area(x1, x2, y1, y2)
 
@@ -30,3 +29,4 @@ for tile_a_index in range(num_red_tiles):
             p1_largest_area = area
 
 print(f"The largest area between two red tiles in part 1 is: {p1_largest_area}")
+print(f"The largest area of any rectangle using only red and green tiles, with red tiles in opposite corners is: {p2_largest_area}")
